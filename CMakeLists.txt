@@ -4,3 +4,4 @@ project(acm)
 set(CMAKE_CXX_STANDARD 11)
 
 add_executable(acm "How Many Answers Are Wrong.cpp")
+add_executable(hdu3080 "HDU-3038.cpp")

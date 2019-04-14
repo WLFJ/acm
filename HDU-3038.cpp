@@ -18,14 +18,14 @@ int Find(int a){
 bool update(int a, int b, int val){
     int FindA = Find(a), FindB = Find(b);
     if(FindA == FindB){
-        if(dis[b] - dis[a] != val) return true;
+        if(dis[a] - dis[b] != val) return true;
     }else{
         if(FindA < FindB){
             parents[FindA] = FindB;
             dis[FindA] = dis[b] + val - dis[a];
         }else{
             parents[FindB] = FindA;
-            dis[FindB] = dis[a] - val + dis[b];
+            dis[FindB] = dis[a] - val - dis[b];
         }
     }
     return false;
@@ -41,6 +41,7 @@ int main(void){
         while(M--){
             int a, b, val;
             cin >> a >> b >> val;
+            b++;//别忘了是开区间！
             if(update(a, b, val)){
                 ans ++;
             }
