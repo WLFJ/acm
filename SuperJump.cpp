@@ -10,7 +10,7 @@
 using namespace std;
 const int MAXN = 1000 + 10;
 typedef unsigned long long ull;
-ull dp[MAXN][MAXN];
+ull dp[MAXN];
 ull Data[MAXN];
 int main(void){
     int N;
@@ -19,19 +19,21 @@ int main(void){
             cin >> Data[i];
         }
         memset(dp, 0, sizeof(dp));
-        for(int i=1; i<=N; i++){
-            for(int k=1; k<=N; k++){
-                if(i == 1 || k == 1)dp[i][k] = Data[i];
-                else{
-                    //大数截断有很多种情况
-                    //紧接在升序之后的小数字
-                    if(Data[i-1] >= Data[i]) dp[i][k] = max(dp[i-1][k-1], Data[i]);
-                    //小数字之后的升序数字
-                    else if(Data[i-2] >= Data[i-1] && Data[i-1] < Data[i-2]) dp[i][k] = max(dp[i-2][k-2])
-                }
+        //之前那道题的DP是求夹杂在其中的上升公共子序列数目，和现在这个还是不一样
+        ull ans = Data[1];
+        dp[1] = Data[1];
+        for(int i=2; i<=N; i++){
+            for(int j=1; j<=i; j++){
+                if(Data[j] < Data[i])//如果第一个数字大，第二个数字小，那么第二个数字就无法放进来！
+                    dp[i] = max(dp[i], dp[j] + Data[i]);
+                if(dp[i] == dp[j] + Data[i]) cout << Data[i] << " ";
             }
+            //经过调试，这样就把1拿进来了
+            dp[i] = max(dp[i], Data[i]);
+            if(dp[i] == Data[i]) cout << dp[i] << " ";
+            ans = max(ans, dp[i]);
         }
-        cout << dp[N][N] << endl;
+        cout << ans << endl;
     }
     return 0;
 }
