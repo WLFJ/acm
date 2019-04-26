@@ -1,7 +1,6 @@
 //
-// Created by Wong Yeah Way on 2019/4/25.
+// Created by Wong Yeah Way on 2019/4/26.
 //
-//粘板子就是爽
 /*
 * Kruskal 算法求 MST
 */
@@ -10,8 +9,8 @@
 #include<algorithm>
 #include<iostream>
 using namespace std;
-const int MAXN=110;//最大点数
-const int MAXM=10000;//最大边数
+const int MAXN=11000;//最大点数
+const int MAXM=1000000;//最大边数
 int F[MAXN];//并查集使用
 struct Edge{
     int u,v,w;
@@ -43,7 +42,7 @@ int Kruskal(int n){
         int t1=find(u);
         int t2=find(v);
         if(t1!=t2){
-            ans+=w;
+            ans = max(ans, w);
             F[t1]=t2;
             cnt++;
         }
@@ -53,22 +52,13 @@ int Kruskal(int n){
     else return ans;
 }
 int main(void){
-    int N;
-    while(cin >> N && N){
-        tol = 0;
-        N--;
-        while(N--){
-            char start;int n;
-            cin >> start >> n;
-            int s = start ^ 'A';
-            while(n--){
-                char end; int e, w;
-                cin >> end >> w;
-                e = end ^ 'A';
-                addedge(s, e, w);
-            }
-        }
-        cout << Kruskal(N + 1) << endl;
+    int N, M;
+    cin >> N >> M;
+    for(int i=0; i<M; i++){
+        int a, b, l;
+        cin >> a >> b >> l;
+        addedge(a, b, l);
     }
+    cout << Kruskal(N) << endl;
     return 0;
- }
+}
