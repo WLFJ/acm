@@ -89,19 +89,23 @@ int minCostMaxflow(int s,int t,int &cost){
     return flow;
 }
 int main(void){
-    int N, M, A, B;
-    scanf("%d%d%d%d", &N, &M, &A, &B);
-    int start = 0, stop = N+1;
-    init(N);
+    //问题说找一条STS的中间不重复的路，我们可以转化为求解两条不重复的ST路线。
+    //S连接在开始位置，流量为2费用为0， T连接在结尾位置，流量为2费用为0
+    //这样跑一下就是答案！
+    int N, M;
+    scanf("%d%d", &N, &M);
+    init(N+1);
+    int s = 0, t = N+1;
+    addedge(s, 1, 2, 0);
     for(int i=1; i<=N; i++){
-        int ai, bi;
-        scanf("%d%d", &ai, &bi);
-        addedge(start, i, ai, 0);//边的容量是多少？
-        addedge(i, stop, bi, 0);
+        int u, v, w;
+        scanf("%d%d%d", &u, &v, &w);
+        addedge(u, v, 1, w);
     }
-    for(int i=0; i<N; i++){
-        scanf("%d%d%d", )
-    }
-
+    addedge(N, t, 2, 0);
+    int ans;
+    cout << "!" << endl;
+    minCostMaxflow(s, t, ans);
+    printf("%d\n", ans);
     return 0;
 }

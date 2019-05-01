@@ -53,27 +53,24 @@ int dinic(int s,int t,int n){
             if(u == t){
                 int tp = INF;
                 for(int i = tail-1;i >= 0;i--)
-                tp = min(tp,edge[sta[i]].cap-edge[sta[i]].flow)
-                ;
+                tp = min(tp,edge[sta[i]].cap-edge[sta[i]].flow);
                 maxflow += tp;
                 for(int i = tail-1;i >= 0;i--){
-                    edge[sta[i]].flow += tp;
-                    edge[sta[i]^1].flow -= tp;
-                    if(edge[sta[i]].cap-edge[sta[i]].flow == 0)
-                    tail = i;
-                    }
-                u = edge[sta[tail]^1].to;
+                        edge[sta[i]].flow += tp;
+                        edge[sta[i]^1].flow -= tp;
+                        if(edge[sta[i]].cap-edge[sta[i]].flow == 0)
+                        tail = i;
                 }
-            else if(cur[u] != -1 && edge[cur[u]].cap > edge[cur[u
-            ]].flow && dep[u] + 1 == dep[edge[cur[u]].to]){
+                u = edge[sta[tail]^1].to;
+            }
+            else if(cur[u] != -1 && edge[cur[u]].cap > edge[cur[u]].flow && dep[u] + 1 == dep[edge[cur[u]].to]){
                 sta[tail++] = cur[u];
                 u = edge[cur[u]].to;
-                }
-            else {
-                while(u != s && cur[u] == -1)
-                u = edge[sta[--tail]^1].to;
-                cur[u] = edge[cur[u]].next;
-                }
+            }else {
+                    while(u != s && cur[u] == -1)
+                        u = edge[sta[--tail]^1].to;
+                        cur[u] = edge[cur[u]].next;
+                    }
             }
         }
     return maxflow;
